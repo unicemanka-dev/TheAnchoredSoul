@@ -3,165 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clarity & Direction</title>
+    <title>Stability Journey Portal</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    
-    <script>
-        // Custom Tailwind Configuration to match the React theme colors
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    },
-                    colors: {
-                        'deep-blue': {
-                            50: '#f0f4f8',
-                            100: '#d9e2ec',
-                            500: '#486581',
-                            600: '#334e68',
-                            700: '#243b53',
-                            800: '#102a43',
-                            900: '#0a1c2d',
-                        },
-                        'soft-gold': {
-                            50: '#fff9eb',
-                            100: '#ffedc2',
-                            200: '#fce197',
-                            400: '#f9cc48',
-                            700: '#946c00',
-                        },
-                        'light-purple': {
-                            100: '#f3f0ff',
-                            700: '#5f3dc4',
-                        }
-                    }
-                }
-            }
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .font-serif { font-family: 'Playfair+Display', serif; }
+        /* Custom Colors from your files */
+        :root {
+            --deep-blue-50: #eff6ff;
+            --deep-blue-100: #dbeafe;
+            --deep-blue-900: #1e3a8a;
+            --soft-gold-400: #fbbf24;
+            --light-purple-100: #f3e8ff;
+            --light-purple-600: #9333ea;
         }
-    </script>
+    </style>
 </head>
-<body class="bg-slate-50 min-h-screen text-deep-blue-900">
+<body class="bg-slate-50">
+    <div id="root"></div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-serif font-bold text-deep-blue-900 mb-4">Clarity & Direction</h1>
-            <p class="text-lg text-deep-blue-600 max-w-2xl mx-auto">
-                Discover your purpose and navigate life's decisions with wisdom.
-            </p>
-        </div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
 
-        <div class="grid lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-2 space-y-8">
-                
-                <div class="bg-white rounded-3xl p-8 md:p-12 border border-deep-blue-100 shadow-sm relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-deep-blue-50 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2"></div>
-                    
-                    <div class="flex items-center gap-2 text-sm font-medium text-deep-blue-500 mb-6 relative z-10">
-                        <i data-lucide="compass" class="w-4 h-4"></i> Today's Direction
-                    </div>
-
-                    <h2 class="text-2xl md:text-3xl font-serif font-semibold text-deep-blue-900 mb-6 relative z-10">
-                        Trusting the Unseen Path
-                    </h2>
-
-                    <div class="relative z-10 mb-8">
-                        <blockquote class="border-l-4 border-soft-gold-400 pl-4 italic text-deep-blue-800 font-serif text-lg mb-6">
-                            "Trust in the LORD with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight."
-                            <footer class="text-sm font-sans font-medium text-deep-blue-500 mt-2 not-italic">Proverbs 3:5-6 (NIV)</footer>
-                        </blockquote>
-                        
-                        <p class="text-deep-blue-700 mb-6 leading-relaxed">
-                            Often, confusion arises when we try to map out every step of our journey before taking the first one. Clarity doesn't always mean seeing the destination; sometimes, it just means knowing the next right step.
-                        </p>
-                    </div>
-
-                    <div class="bg-deep-blue-50 rounded-2xl p-6 relative z-10">
-                        <h3 class="font-semibold text-deep-blue-900 mb-2 flex items-center gap-2">
-                            <i data-lucide="check-square" class="w-5 h-5 text-deep-blue-600"></i> Action Step
-                        </h3>
-                        <p class="text-deep-blue-700 text-sm">
-                            Write down one decision you are struggling with. Instead of trying to solve it completely today, identify just one small, faithful step you can take toward resolution.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="grid sm:grid-cols-2 gap-6">
-                    <div class="bg-white rounded-3xl p-6 border border-deep-blue-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
-                        <div class="w-12 h-12 rounded-xl bg-soft-gold-100 text-soft-gold-700 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                            <i data-lucide="map" class="w-6 h-6"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-deep-blue-900 mb-2">Life Mapping</h3>
-                        <p class="text-sm text-deep-blue-600 mb-4">Create a visual representation of your goals, values, and vision.</p>
-                        <span class="text-sm font-medium text-soft-gold-700 flex items-center gap-1">Open Tool <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
-                    </div>
-                    
-                    <div class="bg-white rounded-3xl p-6 border border-deep-blue-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
-                        <div class="w-12 h-12 rounded-xl bg-light-purple-100 text-light-purple-700 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                            <i data-lucide="lightbulb" class="w-6 h-6"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-deep-blue-900 mb-2">Decision Matrix</h3>
-                        <p class="text-sm text-deep-blue-600 mb-4">A guided framework to help you make difficult choices with peace.</p>
-                        <span class="text-sm font-medium text-light-purple-700 flex items-center gap-1">Open Tool <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="space-y-8">
-                <div class="bg-soft-gold-50 rounded-3xl p-8 border border-soft-gold-200 relative">
-                    <i data-lucide="quote" class="absolute top-6 left-6 w-8 h-8 text-soft-gold-200 opacity-50"></i>
-                    <div class="relative z-10 pt-6">
-                        <p class="text-lg font-serif text-deep-blue-900 italic mb-4">
-                            "God's guidance is like a lantern in the dark. It doesn't show you the whole path, just the next step."
-                        </p>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-3xl p-8 border border-deep-blue-100 shadow-sm">
-                    <h3 class="text-xl font-serif font-semibold text-deep-blue-900 mb-6">Discovery Modules</h3>
-                    <div class="space-y-4" id="module-list">
-                        </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
-
-        // Data for the sidebar modules
-        const modules = [
-            { title: "Identifying Core Values", status: "Completed" },
-            { title: "Uncovering Spiritual Gifts", status: "In Progress" },
-            { title: "Writing a Personal Mission", status: "Locked" }
-        ];
-
-        // Status Style Logic
-        const getStatusStyles = (status) => {
-            switch(status) {
-                case 'Completed': return 'bg-green-100 text-green-700';
-                case 'In Progress': return 'bg-soft-gold-100 text-soft-gold-700';
-                default: return 'bg-gray-100 text-gray-500';
-            }
+        // --- Shared Components & Icons ---
+        const Icon = ({ name, className }) => {
+            useEffect(() => { lucide.createIcons(); }, []);
+            return <i data-lucide={name} className={className}></i>;
         };
 
-        // Render Sidebar Items
-        const listContainer = document.getElementById('module-list');
-        modules.forEach(item => {
-            const div = document.createElement('div');
-            div.className = "flex items-center justify-between p-3 rounded-xl hover:bg-deep-blue-50 transition-colors cursor-pointer";
-            div.innerHTML = `
-                <span class="font-medium text-deep-blue-800 text-sm">${item.title}</span>
-                <span class="text-xs font-medium px-2 py-1 rounded-full ${getStatusStyles(item.status)}">
-                    ${item.status}
-                </span>
-            `;
-            listContainer.appendChild(div);
-        });
+        // --- Data from your files ---
+        const journeyMonths = [
+            { month: "April", theme: "Stillness & Awareness", status: "completed" },
+            { month: "May", theme: "Discipline & Focus", status: "current" },
+            { month: "June", theme: "Emotional Healing", status: "upcoming" }
+        ]; [cite: 297]
+
+        const resources = [
+            { id: 1, title: "The Power of Stillness", type: "Article", category: "Stillness", icon: "file-text" },
+            { id: 2, title: "Guided Meditation: Psalm 23", type: "Audio", category: "Stillness", icon: "headphones" },
+            { id: 3, title: "Overcoming Distractions", type: "Video", category: "Focus", icon: "play-circle" }
+        ]; [cite: 208, 209]
+
+        // --- Main App Component ---
+        function App() {
+            const [currentPage, setCurrentPage] = useState('dashboard');
+
+            const renderPage = () => {
+                switch(currentPage) {
+                    case 'community': return <Community />;
+                    case 'resources': return <ResourceLibrary />;
+                    case 'soulcheck': return <SoulCheck onComplete={() => setCurrentPage('dashboard')} />;
+                    case 'clarity': return <ClarityDirection />;
+                    default: return <Dashboard onStartSoulCheck={() => setCurrentPage('soulcheck')} />;
+                }
+            };
+
+            return (
+                <div className="min-h-screen">
+                    <nav class="bg-white border-b border-gray-200 py-4 px-8 flex justify-between items-center sticky top-0 z-50">
+                        <h1 class="text-xl font-serif font-bold text-blue-900">Stability</h1>
+                        <div class="flex gap-6 text-sm font-medium text-gray-600">
+                            {['dashboard', 'community', 'resources', 'clarity'].map(page => (
+                                <button key={page} onClick={() => setCurrentPage(page)} 
+                                    className={`capitalize ${currentPage === page ? 'text-blue-900 border-b-2 border-blue-900' : ''}`}>
+                                    {page}
+                                </button>
+                            ))}
+                        </div>
+                    </nav>
+                    <main>{renderPage()}</main>
+                </div>
+            );
+        }
+
+        // --- Dashboard Component ---
+        function Dashboard({ onStartSoulCheck }) {
+            return (
+                <div className="max-w-7xl mx-auto px-6 py-12">
+                    <div className="flex justify-between items-end mb-12">
+                        <div>
+                            <h1 className="text-4xl font-serif font-bold text-blue-900 mb-2">Welcome back, Sarah</h1>
+                            <p className="text-gray-600">Here is your progress on the journey to stability.</p>
+                        </div>
+                        <button onClick={onStartSoulCheck} className="px-6 py-2 rounded-full bg-purple-100 text-purple-700 font-medium flex items-center gap-2">
+                            <Icon name="activity" className="w-4 h-4" /> Take Daily Soul Check
+                        </button>
+                    </div> [cite: 298]
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div className="md:col-span-2 bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
+                            <h2 className="text-2xl font-serif font-semibold text-blue-900 mb-8">Your Journey</h2>
+                            <div className="space-y-6">
+                                {journeyMonths.map((m, i) => (
+                                    <div key={i} className="flex items-center gap-4">
+                                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${m.status === 'completed' ? 'bg-green-100 text-green-600' : 'bg-blue-50 text-blue-500'}`}>
+                                            <Icon name={m.status === 'completed' ? 'check' : 'calendar'} className="w-5 h-5" />
+                                        </div>
+                                        <div>
+                                            <p className="font-bold text-blue-900">{m.month}</p>
+                                            <p className="text-sm text-gray-500">{m.theme}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="space-y-4">
+                            <div className="bg-blue-900 rounded-3xl p-6 text-white">
+                                <h3 className="font-serif text-xl mb-4">Recommended for You</h3>
+                                <div className="space-y-3">
+                                    <div className="bg-blue-800 p-4 rounded-xl">
+                                        <p className="text-xs text-amber-400 font-bold uppercase">Stillness</p>
+                                        <p className="font-medium">Overcoming Morning Anxiety</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // --- Soul Check Component ---
+        function SoulCheck({ onComplete }) {
+            const [step, setStep] = useState(1);
+            const [scores, setScores] = useState({ focus: 5, emotions: 5 });
+
+            return (
+                <div className="max-w-2xl mx-auto py-20 px-6">
+                    <div className="bg-white rounded-3xl p-10 border border-gray-100 shadow-xl text-center">
+                        <Icon name="activity" className="w-12 h-12 text-purple-600 mx-auto mb-6" />
+                        <h2 className="text-3xl font-serif font-bold text-blue-900 mb-2">Daily Soul Check</h2>
+                        <div className="w-full bg-gray-100 h-2 rounded-full my-8">
+                            <div className="bg-blue-900 h-2 rounded-full transition-all" style={{width: `${(step/2)*100}%`}}></div>
+                        </div>
+                        
+                        {step === 1 ? (
+                            <div className="space-y-6">
+                                <h3 className="text-xl font-medium">How is your focus today?</h3>
+                                <input type="range" min="1" max="10" value={scores.focus} 
+                                    onChange={(e) => setScores({...scores, focus: e.target.value})}
+                                    className="w-full accent-blue-900" />
+                                <button onClick={() => setStep(2)} className="w-full py-3 bg-blue-900 text-white rounded-xl">Next</button>
+                            </div>
+                        ) : (
+                            <div className="space-y-6">
+                                <h3 className="text-xl font-medium">Soul Check Complete!</h3>
+                                <p className="text-gray-600">Based on your focus score of {scores.focus}, we recommend a stillness session.</p>
+                                <button onClick={onComplete} className="w-full py-3 bg-green-600 text-white rounded-xl">Return to Dashboard</button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        // Placeholder components for other views
+        function Community() { return <div className="p-20 text-center"><h1 className="text-3xl font-serif">Community Forum</h1><p>Connect with others here.</p></div>; }
+        function ResourceLibrary() { return <div className="p-20 text-center"><h1 className="text-3xl font-serif">Resource Library</h1><p>Articles and Meditations.</p></div>; }
+        function ClarityDirection() { return <div className="p-20 text-center"><h1 className="text-3xl font-serif">Clarity & Direction</h1><p>Discover your purpose.</p></div>; }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
 </body>
 </html>
