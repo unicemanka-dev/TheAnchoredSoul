@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarity & Direction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <script>
+        // Custom Tailwind Configuration to match the React theme colors
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        'deep-blue': {
+                            50: '#f0f4f8',
+                            100: '#d9e2ec',
+                            500: '#486581',
+                            600: '#334e68',
+                            700: '#243b53',
+                            800: '#102a43',
+                            900: '#0a1c2d',
+                        },
+                        'soft-gold': {
+                            50: '#fff9eb',
+                            100: '#ffedc2',
+                            200: '#fce197',
+                            400: '#f9cc48',
+                            700: '#946c00',
+                        },
+                        'light-purple': {
+                            100: '#f3f0ff',
+                            700: '#5f3dc4',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 min-h-screen text-deep-blue-900">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-serif font-bold text-deep-blue-900 mb-4">Clarity & Direction</h1>
+            <p class="text-lg text-deep-blue-600 max-w-2xl mx-auto">
+                Discover your purpose and navigate life's decisions with wisdom.
+            </p>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-8">
+                
+                <div class="bg-white rounded-3xl p-8 md:p-12 border border-deep-blue-100 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-deep-blue-50 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2"></div>
+                    
+                    <div class="flex items-center gap-2 text-sm font-medium text-deep-blue-500 mb-6 relative z-10">
+                        <i data-lucide="compass" class="w-4 h-4"></i> Today's Direction
+                    </div>
+
+                    <h2 class="text-2xl md:text-3xl font-serif font-semibold text-deep-blue-900 mb-6 relative z-10">
+                        Trusting the Unseen Path
+                    </h2>
+
+                    <div class="relative z-10 mb-8">
+                        <blockquote class="border-l-4 border-soft-gold-400 pl-4 italic text-deep-blue-800 font-serif text-lg mb-6">
+                            "Trust in the LORD with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight."
+                            <footer class="text-sm font-sans font-medium text-deep-blue-500 mt-2 not-italic">Proverbs 3:5-6 (NIV)</footer>
+                        </blockquote>
+                        
+                        <p class="text-deep-blue-700 mb-6 leading-relaxed">
+                            Often, confusion arises when we try to map out every step of our journey before taking the first one. Clarity doesn't always mean seeing the destination; sometimes, it just means knowing the next right step.
+                        </p>
+                    </div>
+
+                    <div class="bg-deep-blue-50 rounded-2xl p-6 relative z-10">
+                        <h3 class="font-semibold text-deep-blue-900 mb-2 flex items-center gap-2">
+                            <i data-lucide="check-square" class="w-5 h-5 text-deep-blue-600"></i> Action Step
+                        </h3>
+                        <p class="text-deep-blue-700 text-sm">
+                            Write down one decision you are struggling with. Instead of trying to solve it completely today, identify just one small, faithful step you can take toward resolution.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-3xl p-6 border border-deep-blue-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
+                        <div class="w-12 h-12 rounded-xl bg-soft-gold-100 text-soft-gold-700 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="map" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-deep-blue-900 mb-2">Life Mapping</h3>
+                        <p class="text-sm text-deep-blue-600 mb-4">Create a visual representation of your goals, values, and vision.</p>
+                        <span class="text-sm font-medium text-soft-gold-700 flex items-center gap-1">Open Tool <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+                    </div>
+                    
+                    <div class="bg-white rounded-3xl p-6 border border-deep-blue-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
+                        <div class="w-12 h-12 rounded-xl bg-light-purple-100 text-light-purple-700 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="lightbulb" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-deep-blue-900 mb-2">Decision Matrix</h3>
+                        <p class="text-sm text-deep-blue-600 mb-4">A guided framework to help you make difficult choices with peace.</p>
+                        <span class="text-sm font-medium text-light-purple-700 flex items-center gap-1">Open Tool <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <div class="bg-soft-gold-50 rounded-3xl p-8 border border-soft-gold-200 relative">
+                    <i data-lucide="quote" class="absolute top-6 left-6 w-8 h-8 text-soft-gold-200 opacity-50"></i>
+                    <div class="relative z-10 pt-6">
+                        <p class="text-lg font-serif text-deep-blue-900 italic mb-4">
+                            "God's guidance is like a lantern in the dark. It doesn't show you the whole path, just the next step."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-3xl p-8 border border-deep-blue-100 shadow-sm">
+                    <h3 class="text-xl font-serif font-semibold text-deep-blue-900 mb-6">Discovery Modules</h3>
+                    <div class="space-y-4" id="module-list">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Data for the sidebar modules
+        const modules = [
+            { title: "Identifying Core Values", status: "Completed" },
+            { title: "Uncovering Spiritual Gifts", status: "In Progress" },
+            { title: "Writing a Personal Mission", status: "Locked" }
+        ];
+
+        // Status Style Logic
+        const getStatusStyles = (status) => {
+            switch(status) {
+                case 'Completed': return 'bg-green-100 text-green-700';
+                case 'In Progress': return 'bg-soft-gold-100 text-soft-gold-700';
+                default: return 'bg-gray-100 text-gray-500';
+            }
+        };
+
+        // Render Sidebar Items
+        const listContainer = document.getElementById('module-list');
+        modules.forEach(item => {
+            const div = document.createElement('div');
+            div.className = "flex items-center justify-between p-3 rounded-xl hover:bg-deep-blue-50 transition-colors cursor-pointer";
+            div.innerHTML = `
+                <span class="font-medium text-deep-blue-800 text-sm">${item.title}</span>
+                <span class="text-xs font-medium px-2 py-1 rounded-full ${getStatusStyles(item.status)}">
+                    ${item.status}
+                </span>
+            `;
+            listContainer.appendChild(div);
+        });
+    </script>
+</body>
+</html>
