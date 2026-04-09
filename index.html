@@ -4,267 +4,327 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Anchored Soul</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'cream-50': '#FFFFFF',
-                        'cream-100': '#FDFBF7',
-                        'cream-200': '#F5F2ED',
-                        'gold-400': '#E5C76B',
-                        'gold-500': '#D4AF37',
-                        'gold-600': '#B5952F',
-                        'deepblue-800': '#112240',
-                        'deepblue-900': '#0A192F',
-                        'deepblue-950': '#020617',
-                    },
-                    fontFamily: {
-                        serif: ['Cormorant Garamond', 'serif'],
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:italic,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #FDFBF7; color: #0A192F; -webkit-tap-highlight-color: transparent; }
-        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        :root {
+            --cream-50: #fefdfb;
+            --cream-100: #fdfaf3;
+            --cream-200: #f5f1e6;
+            --deepblue-900: #1a2a3a;
+            --deepblue-800: #2c3e50;
+            --gold-500: #d4af37;
+            --gold-600: #b8962e;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cream-100);
+            color: var(--deepblue-900);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        .font-serif { font-family: 'Playfair Display', serif; }
+
+        /* Layout */
+        .app-container {
+            max-width: 450px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding-bottom: 100px;
+            position: relative;
+        }
+
+        .page {
+            display: none;
+            padding: 48px 24px 24px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .page.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* UI Components */
+        .card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 24px;
+            border: 1px solid var(--cream-200);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+            margin-bottom: 24px;
+        }
+
+        .btn-gold {
+            background: var(--gold-500);
+            color: var(--deepblue-900);
+            border: none;
+            border-radius: 12px;
+            padding: 14px;
+            width: 100%;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-gold:active { transform: scale(0.98); }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border-top: 1px solid var(--cream-200);
+            padding: 8px 16px 20px;
+            display: flex;
+            justify-content: space-around;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: none;
+            border: none;
+            color: rgba(44, 62, 80, 0.4);
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .nav-item.active { color: var(--gold-600); }
+        .nav-item i { margin-bottom: 4px; }
+
+        /* Meditation Timer */
+        .timer-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid var(--cream-200);
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .timer-display { font-size: 3rem; font-weight: 300; }
+
+        /* Chat */
+        #chat-container {
+            height: 60vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+        }
+
+        .message.model { background: var(--white); border: 1px solid var(--cream-200); align-self: flex-start; }
+        .message.user { background: var(--deepblue-900); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+
+        /* Floating WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            background: #25D366;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 99;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
-    <div id="root"></div>
 
-    <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
-        const { motion, AnimatePresence } = window.Motion;
+<div class="app-container">
+    <div id="landing" class="page active">
+        <header style="text-align: center; margin-bottom: 40px;">
+            <h1 class="font-serif" style="font-size: 2.5rem;">The Anchored Soul</h1>
+            <p class="font-serif" style="font-style: italic; opacity: 0.8;">Bringing stability to the soul in a distracted world.</p>
+        </header>
+        <div class="card">
+            <h2 class="font-serif">Why We Exist</h2>
+            <p style="font-size: 0.9rem; margin: 15px 0; color: var(--deepblue-800);">Our souls are constantly bombarded by distractions. We provide tools to help you anchor your life in faith.</p>
+            <input type="text" id="user-name" placeholder="Your Name" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid var(--cream-200); background: var(--cream-50);">
+            <button class="btn-gold" onclick="joinApp()">Join the Platform</button>
+        </div>
+    </div>
 
-        const Icon = ({ name, className = "" }) => {
-            useEffect(() => { lucide.createIcons(); }, [name]);
-            return <i data-lucide={name} className={className}></i>;
-        };
-
-        // --- Instant Repair Component [cite: 19, 26, 33-37] ---
-        function InstantRepair() {
-            const [messages, setMessages] = useState([
-                { role: 'model', text: "Peace be with you. I am Instant Repair, your spiritual companion. What is troubling your soul today? Are you facing distractions, confusion, or relationship struggles?" }
-            ]);
-            const [input, setInput] = useState('');
-            const [isLoading, setIsLoading] = useState(false);
-            const messagesEndRef = useRef(null);
-
-            const scrollToBottom = () => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-            useEffect(() => { scrollToBottom(); }, [messages]);
-
-            const handleSend = (e) => {
-                e.preventDefault();
-                if (!input.trim()) return;
-
-                const userMsg = input.trim();
-                setInput('');
-                setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
-                setIsLoading(true);
-
-                // Simulated Local Spiritual Logic (Offline relief) [cite: 30]
-                setTimeout(() => {
-                    const advice = [
-                        "Anchor yourself in prayer. Remember: 'We have this hope as an anchor for the soul, firm and secure' (Hebrews 6:19).",
-                        "Take a deep breath. Focus on what is true and noble in this moment.",
-                        "Confusion is but a storm; your faith is the keel. Sit in silence for three minutes to let the sediment settle.",
-                        "In relationships, seek first to understand, then to be understood. Grace is the ultimate repair tool."
-                    ];
-                    const response = advice[Math.floor(Math.random() * advice.length)];
-                    setMessages(prev => [...prev, { role: 'model', text: response }]);
-                    setIsLoading(false);
-                }, 1000);
-            };
-
-            return (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="pb-24 pt-6 max-w-md mx-auto h-screen flex flex-col">
-                    <header className="mb-4 px-6 shrink-0 flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gold-100 flex items-center justify-center text-gold-600">
-                            <Icon name="sparkles" className="w-5 h-5" />
-                        </div>
-                        <div>
-                            <h1 className="font-serif text-2xl font-semibold">Instant Repair</h1>
-                            <p className="text-xs opacity-70">Spiritual relief</p>
-                        </div>
-                    </header>
-                    <div className="flex-1 overflow-y-auto px-6 space-y-4 hide-scrollbar">
-                        {messages.map((msg, idx) => (
-                            <div key={idx} className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                                <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${msg.role === 'user' ? 'bg-deepblue-900 text-white' : 'bg-cream-200 text-gold-600'}`}>
-                                    <Icon name={msg.role === 'user' ? "user" : "bot"} className="w-4 h-4" />
-                                </div>
-                                <div className={`rounded-2xl p-4 max-w-[80%] text-sm ${msg.role === 'user' ? 'bg-deepblue-900 text-white rounded-tr-sm' : 'bg-white border border-cream-200 shadow-sm rounded-tl-sm'}`}>
-                                    {msg.text}
-                                </div>
-                            </div>
-                        ))}
-                        {isLoading && <div className="text-xs text-gold-600 animate-pulse px-10">Repairing soul...</div>}
-                        <div ref={messagesEndRef} />
-                    </div>
-                    <form onSubmit={handleSend} className="px-6 pt-2 relative">
-                        <input value={input} onChange={e => setInput(e.target.value)} placeholder="Share what's on your mind..." className="w-full bg-white border border-cream-200 rounded-full pl-5 pr-12 py-3.5 text-sm focus:outline-none focus:border-gold-500" />
-                        <button type="submit" className="absolute right-8 top-[14px] w-8 h-8 bg-gold-500 text-deepblue-950 rounded-full flex items-center justify-center">
-                            <Icon name="send" className="w-3 h-3 ml-0.5" />
-                        </button>
-                    </form>
-                </motion.div>
-            );
-        }
-
-        // --- Home Component (With Signup & Tracking) [cite: 46-55, 62-68] ---
-        function Home({ onNavigate, userData, setUserData }) {
-            const [name, setName] = useState('');
-            const [email, setEmail] = useState('');
-            const today = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-
-            const handleJoin = (e) => {
-                e.preventDefault();
-                if (name && email) setUserData({ name, email });
-            };
-
-            if (!userData) {
-                return (
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="pb-24 px-6 pt-12 max-w-md mx-auto">
-                        <header className="mb-10 text-center">
-                            <h1 className="font-serif text-4xl font-semibold text-deepblue-900 mb-4">The Anchored Soul</h1>
-                            <p className="text-base italic font-serif opacity-80 leading-relaxed">Bringing stability to the soul in a distracted world.</p>
-                        </header>
-                        <section className="bg-white rounded-3xl p-8 shadow-sm border border-cream-200">
-                            <h2 className="text-2xl font-serif text-deepblue-900 mb-4">Why We Exist</h2>
-                            <p className="text-sm opacity-80 mb-6 leading-relaxed">
-                                In a fast-paced world, our souls are bombarded by distractions. <strong>The Anchored Soul</strong> is your sanctuary for scripture-based balance.
-                            </p>
-                            <form onSubmit={handleJoin} className="space-y-4">
-                                <input required value={name} onChange={e => setName(e.target.value)} placeholder="Enter your name" className="w-full bg-cream-50 border border-cream-200 rounded-xl px-4 py-3 text-sm focus:border-gold-500 outline-none" />
-                                <input type="email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email" className="w-full bg-cream-50 border border-cream-200 rounded-xl px-4 py-3 text-sm focus:border-gold-500 outline-none" />
-                                <button type="submit" className="w-full bg-gold-500 text-deepblue-950 rounded-xl py-3.5 font-semibold shadow-lg shadow-gold-500/20">Join the Platform</button>
-                            </form>
-                        </section>
-                    </motion.div>
-                );
-            }
-
-            return (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="pb-24 px-6 pt-12 max-w-md mx-auto">
-                    <header className="mb-10 text-center">
-                        <h1 className="font-serif text-3xl font-semibold text-deepblue-900">The Anchored Soul</h1>
-                    </header>
-
-                    <section className="bg-white rounded-3xl p-6 shadow-sm border border-cream-200 mb-8">
-                        <p className="text-xs font-semibold text-gold-500 uppercase tracking-widest mb-2">{today}</p>
-                        <h2 className="text-xl font-medium text-deepblue-900 mb-4">Welcome back, {userData.name}.</h2>
-                        <div className="bg-cream-100 rounded-2xl p-4 mb-6 italic text-lg text-deepblue-900 font-serif leading-relaxed">
-                            "We have this hope as an anchor for the soul, firm and secure."
-                            <p className="text-xs text-deepblue-800/60 mt-2 not-italic font-sans uppercase tracking-wider">— Hebrews 6:19 (NIV)</p>
-                        </div>
-                        
-                        <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm font-medium">Daily Soul Check-in</span>
-                            <span className="text-xs font-semibold text-gold-500">1/4 Completed</span>
-                        </div>
-                        <div className="w-full bg-cream-200 rounded-full h-2 mb-6 overflow-hidden">
-                            <div className="bg-gold-500 h-full w-[25%]"></div>
-                        </div>
-
-                        <button onClick={() => onNavigate('meditate')} className="w-full bg-deepblue-900 text-white rounded-xl py-3 font-medium hover:bg-deepblue-800 transition-colors">Start Today</button>
-                    </section>
-
-                    <section className="mb-8 bg-deepblue-900 rounded-3xl p-6 text-white relative overflow-hidden shadow-lg border border-deepblue-800">
-                        <div className="relative z-10">
-                            <div className="flex items-center gap-3 mb-2">
-                                <Icon name="sparkles" className="w-6 h-6 text-gold-400" />
-                                <h2 className="text-xl font-medium">Instant Repair</h2>
-                            </div>
-                            <p className="text-sm text-white/80 mb-5">Need instant relief or guidance? Chat with our intelligent spiritual companion.</p>
-                            <button onClick={() => onNavigate('repair')} className="w-full bg-gold-500 text-deepblue-950 rounded-xl py-3 text-sm font-semibold">Begin the Journey</button>
-                        </div>
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-gold-500/20 rounded-full blur-2xl -mr-10 -mt-10"></div>
-                    </section>
-                </motion.div>
-            );
-        }
-
-        // --- Core Components Placeholders ---
-        const Meditate = () => (
-            <div className="pt-20 px-6 text-center max-w-md mx-auto">
-                <Icon name="play" className="w-12 h-12 mx-auto mb-4 text-gold-500" />
-                <h1 className="font-serif text-3xl font-semibold mb-4">Meditation</h1>
-                <p className="opacity-70">Find quiet time and reflect on the Word.</p>
+    <div id="home" class="page">
+        <h2 class="font-serif" id="welcome-msg">Welcome, Friend</h2>
+        <div class="card" style="background: var(--cream-200); margin-top: 20px;">
+            <p class="font-serif" style="font-size: 1.1rem; font-style: italic;">"We have this hope as an anchor for the soul, firm and secure."</p>
+            <p style="font-size: 10px; margin-top: 8px;">— HEBREWS 6:19</p>
+        </div>
+        <div class="card" onclick="showPage('repair')" style="background: var(--deepblue-900); color: white; cursor: pointer;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                <i data-lucide="sparkles" style="color: var(--gold-500)"></i>
+                <h3 style="margin:0">Instant Repair</h3>
             </div>
-        );
+            <p style="font-size: 0.85rem; opacity: 0.8;">Need instant spiritual relief? Chat with your companion.</p>
+        </div>
+    </div>
 
-        const Focus = () => (
-            <div className="pt-20 px-6 text-center max-w-md mx-auto">
-                <Icon name="target" className="w-12 h-12 mx-auto mb-4 text-gold-500" />
-                <h1 className="font-serif text-3xl font-semibold mb-4">Focus</h1>
-                <p className="opacity-70">Eliminate distractions and anchor your attention.</p>
+    <div id="meditate" class="page">
+        <h2 class="font-serif">Meditation</h2>
+        <div class="card" style="text-align: center;">
+            <div class="timer-circle">
+                <div class="timer-display" id="timer">05:00</div>
             </div>
-        );
+            <div style="display: flex; justify-content: center; gap: 15px;">
+                <button class="btn-gold" id="timer-toggle" onclick="toggleTimer()" style="width: 60px; height: 60px; border-radius: 50%;"><i data-lucide="play"></i></button>
+                <button onclick="resetTimer()" style="width: 60px; height: 60px; border-radius: 50%; border:none; background: var(--cream-200); cursor:pointer;"><i data-lucide="rotate-ccw"></i></button>
+            </div>
+        </div>
+    </div>
 
-        // --- Main Controller [cite: 4, 8] ---
-        function App() {
-            const [activeTab, setActiveTab] = useState('home');
-            const [userData, setUserData] = useState(null);
+    <div id="repair" class="page" style="padding-top: 20px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
+            <i data-lucide="sparkles" style="color: var(--gold-600)"></i>
+            <h2 class="font-serif">Instant Repair</h2>
+        </div>
+        <div id="chat-container">
+            <div class="message model">Peace be with you. I am your spiritual companion. What is troubling your soul today?</div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+            <input type="text" id="chat-input" placeholder="Share your heart..." style="flex:1; padding:12px; border-radius:25px; border:1px solid var(--cream-200);">
+            <button onclick="sendMessage()" style="background:var(--gold-500); border:none; width:45px; height:45px; border-radius:50%; color:white; cursor:pointer;"><i data-lucide="send"></i></button>
+        </div>
+    </div>
 
-            const renderContent = () => {
-                switch (activeTab) {
-                    case 'home': return <Home onNavigate={setActiveTab} userData={userData} setUserData={setUserData} />;
-                    case 'repair': return <InstantRepair />;
-                    case 'meditate': return <Meditate />;
-                    case 'focus': return <Focus />;
-                    default: return <Home onNavigate={setActiveTab} userData={userData} setUserData={setUserData} />;
+    <nav id="main-nav" style="display: none;">
+        <button class="nav-item active" onclick="showPage('home')"><i data-lucide="home"></i>Home</button>
+        <button class="nav-item" onclick="showPage('meditate')"><i data-lucide="play"></i>Meditate</button>
+        <button class="nav-item" onclick="showPage('repair')"><i data-lucide="sparkles"></i>Repair</button>
+    </nav>
+
+    <a href="https://wa.me/237673202653" class="whatsapp-float" target="_blank">
+        <i data-lucide="message-circle"></i>
+    </a>
+</div>
+
+<script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // State Management
+    let timerInterval;
+    let timeLeft = 300;
+    let isTimerRunning = false;
+
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        
+        document.querySelectorAll('.nav-item').forEach(btn => {
+            btn.classList.toggle('active', btn.innerText.toLowerCase().includes(pageId));
+        });
+    }
+
+    function joinApp() {
+        const name = document.getElementById('user-name').value || 'Friend';
+        document.getElementById('welcome-msg').innerText = `Welcome back, ${name}.`;
+        document.getElementById('main-nav').style.display = 'flex';
+        showPage('home');
+    }
+
+    // Timer Logic
+    function toggleTimer() {
+        const btn = document.getElementById('timer-toggle');
+        if (isTimerRunning) {
+            clearInterval(timerInterval);
+            btn.innerHTML = '<i data-lucide="play"></i>';
+        } else {
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    return;
                 }
-            };
-
-            return (
-                <div className="min-h-screen bg-cream-100 font-sans text-deepblue-900 selection:bg-gold-500/30">
-                    <main className="h-full">
-                        <AnimatePresence mode="wait">
-                            {renderContent()}
-                        </AnimatePresence>
-                    </main>
-
-                    {/* Support [cite: 1, 3] */}
-                    <a href="https://wa.me/237673202653" target="_blank" className="fixed bottom-24 right-6 w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg z-50">
-                        <Icon name="message-circle" />
-                    </a>
-
-                    {/* Navigation [cite: 8-13] */}
-                    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-cream-200 pb-safe pt-2 px-2 z-40 shadow-[0_-8px_30px_rgb(0,0,0,0.04)]">
-                        <div className="max-w-md mx-auto flex justify-between items-center pb-2">
-                            {[
-                                { id: 'home', icon: 'home', label: 'Home' },
-                                { id: 'meditate', icon: 'play', label: 'Meditate' },
-                                { id: 'focus', icon: 'target', label: 'Focus' },
-                                { id: 'relationships', icon: 'users', label: 'Relate' },
-                                { id: 'repair', icon: 'sparkles', label: 'Repair' }
-                            ].map(item => (
-                                <button key={item.id} onClick={() => setActiveTab(item.id)} className={`flex flex-col items-center justify-center min-w-[60px] h-14 transition-colors ${activeTab === item.id ? 'text-gold-600' : 'text-deepblue-800/40'}`}>
-                                    <Icon name={item.icon} className={`w-5 h-5 mb-1 ${activeTab === item.id ? 'scale-110' : 'scale-100'} transition-transform`} />
-                                    <span className={`text-[10px] font-medium tracking-wide ${activeTab === item.id ? 'font-semibold' : ''}`}>{item.label}</span>
-                                </button>
-                            ))}
-                        </div>
-                    </nav>
-                </div>
-            );
+                timeLeft--;
+                updateTimerDisplay();
+            }, 1000);
+            btn.innerHTML = '<i data-lucide="pause"></i>';
         }
+        isTimerRunning = !isTimerRunning;
+        lucide.createIcons();
+    }
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+    function resetTimer() {
+        clearInterval(timerInterval);
+        timeLeft = 300;
+        isTimerRunning = false;
+        updateTimerDisplay();
+        document.getElementById('timer-toggle').innerHTML = '<i data-lucide="play"></i>';
+        lucide.createIcons();
+    }
+
+    function updateTimerDisplay() {
+        const mins = Math.floor(timeLeft / 60);
+        const secs = timeLeft % 60;
+        document.getElementById('timer').innerText = `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    // Simulated Chat Logic (Local Replacement for Gemini)
+    const library = {
+        "anxious": "Do not be anxious about anything. Take a deep breath. Try the Meditation tab to center your mind.",
+        "stress": "Rest is a holy command. Consider setting your phone to grayscale for the next hour to reduce noise.",
+        "faith": "Faith is the substance of things hoped for. Keep your anchor firm in the Word today.",
+        "default": "I hear you. Take a moment to breathe deeply and acknowledge God's sovereignty over this situation."
+    };
+
+    function sendMessage() {
+        const input = document.getElementById('chat-input');
+        const text = input.value.trim().toLowerCase();
+        if (!text) return;
+
+        const container = document.getElementById('chat-container');
+        
+        // Add User Message
+        container.innerHTML += `<div class="message user">${input.value}</div>`;
+        input.value = '';
+
+        // Simulate Bot Thinking
+        setTimeout(() => {
+            let response = library.default;
+            for (let key in library) {
+                if (text.includes(key)) response = library[key];
+            }
+            container.innerHTML += `<div class="message model">${response}</div>`;
+            container.scrollTop = container.scrollHeight;
+        }, 600);
+    }
+</script>
+
 </body>
 </html>
