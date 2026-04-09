@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Anchored Soul</title>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:italic,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --cream-50: #fefdfb;
@@ -18,215 +18,118 @@
             --white: #ffffff;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--cream-100);
-            color: var(--deepblue-900);
-            line-height: 1.5;
-            overflow-x: hidden;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        
+        body { background-color: var(--cream-100); color: var(--deepblue-900); overflow-x: hidden; }
 
         .font-serif { font-family: 'Playfair Display', serif; }
 
-        /* Layout */
-        .app-container {
-            max-width: 450px;
-            margin: 0 auto;
-            min-height: 100vh;
-            padding-bottom: 100px;
-            position: relative;
-        }
+        .container { max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; padding-bottom: 80px; }
 
-        .page {
-            display: none;
-            padding: 48px 24px 24px;
-            animation: fadeIn 0.4s ease-out;
-        }
-
+        .page { display: none; padding: 24px; animation: fadeIn 0.3s ease-in-out; }
         .page.active { display: block; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Card Styles */
+        .card { background: var(--white); border-radius: 20px; padding: 24px; border: 1px solid var(--cream-200); box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 20px; }
+
+        /* Buttons */
+        .btn-primary { 
+            background: var(--gold-500); color: var(--deepblue-900); border: none; 
+            padding: 14px; border-radius: 12px; width: 100%; font-weight: 600; cursor: pointer; transition: 0.2s; 
         }
+        .btn-primary:active { transform: scale(0.98); }
 
-        /* UI Components */
-        .card {
-            background: var(--white);
-            border-radius: 24px;
-            padding: 24px;
-            border: 1px solid var(--cream-200);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
-            margin-bottom: 24px;
-        }
-
-        .btn-gold {
-            background: var(--gold-500);
-            color: var(--deepblue-900);
-            border: none;
-            border-radius: 12px;
-            padding: 14px;
-            width: 100%;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
-        }
-
-        .btn-gold:active { transform: scale(0.98); }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--white);
-            border-top: 1px solid var(--cream-200);
-            padding: 8px 16px 20px;
-            display: flex;
-            justify-content: space-around;
-            z-index: 100;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: none;
-            border: none;
-            color: rgba(44, 62, 80, 0.4);
-            cursor: pointer;
-            font-size: 10px;
-            font-weight: 500;
-        }
-
-        .nav-item.active { color: var(--gold-600); }
-        .nav-item i { margin-bottom: 4px; }
-
-        /* Meditation Timer */
+        /* Timer */
         .timer-circle {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            border: 4px solid var(--cream-200);
-            margin: 0 auto 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+            width: 200px; height: 200px; border-radius: 50%; border: 4px solid var(--cream-200);
+            margin: 40px auto; display: flex; align-items: center; justify-content: center;
+            font-size: 3rem; font-weight: 300; position: relative;
         }
-
-        .timer-display { font-size: 3rem; font-weight: 300; }
 
         /* Chat */
-        #chat-container {
-            height: 60vh;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 20px;
+        #chat-window { height: 400px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding: 10px; }
+        .msg { max-width: 80%; padding: 12px 16px; border-radius: 15px; font-size: 0.9rem; }
+        .msg.bot { background: var(--cream-200); align-self: flex-start; border-bottom-left-radius: 2px; }
+        .msg.user { background: var(--deepblue-900); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+
+        /* Navigation */
+        nav { 
+            position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); 
+            display: flex; justify-content: space-around; padding: 12px; border-top: 1px solid var(--cream-200);
+            max-width: 480px; margin: 0 auto;
         }
-
-        .message {
-            max-width: 85%;
-            padding: 12px 16px;
-            border-radius: 16px;
-            font-size: 14px;
-        }
-
-        .message.model { background: var(--white); border: 1px solid var(--cream-200); align-self: flex-start; }
-        .message.user { background: var(--deepblue-900); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
-
-        /* Floating WhatsApp */
+        .nav-btn { background: none; border: none; color: #a0aec0; cursor: pointer; display: flex; flex-direction: column; align-items: center; font-size: 10px; }
+        .nav-btn.active { color: var(--gold-600); }
+        
         .whatsapp-float {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            background: #25D366;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            z-index: 99;
-            text-decoration: none;
+            position: fixed; bottom: 85px; right: 20px; background: #25D366; color: white;
+            width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); text-decoration: none; z-index: 1000;
         }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <div id="landing" class="page active">
-        <header style="text-align: center; margin-bottom: 40px;">
-            <h1 class="font-serif" style="font-size: 2.5rem;">The Anchored Soul</h1>
-            <p class="font-serif" style="font-style: italic; opacity: 0.8;">Bringing stability to the soul in a distracted world.</p>
-        </header>
-        <div class="card">
-            <h2 class="font-serif">Why We Exist</h2>
-            <p style="font-size: 0.9rem; margin: 15px 0; color: var(--deepblue-800);">Our souls are constantly bombarded by distractions. We provide tools to help you anchor your life in faith.</p>
-            <input type="text" id="user-name" placeholder="Your Name" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid var(--cream-200); background: var(--cream-50);">
-            <button class="btn-gold" onclick="joinApp()">Join the Platform</button>
+<div class="container">
+    <section id="landing" class="page active" style="text-align: center; padding-top: 60px;">
+        <h1 class="font-serif" style="font-size: 2.5rem; margin-bottom: 10px;">The Anchored Soul</h1>
+        <p class="font-serif" style="font-style: italic; opacity: 0.7;">Stability in a distracted world.</p>
+        <div class="card" style="margin-top: 40px;">
+            <p style="margin-bottom: 20px;">Ready to anchor your soul?</p>
+            <input type="text" id="user-name" placeholder="Enter your name" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 15px;">
+            <button class="btn-primary" onclick="startApp()">Begin Journey</button>
         </div>
-    </div>
+    </section>
 
-    <div id="home" class="page">
-        <h2 class="font-serif" id="welcome-msg">Welcome, Friend</h2>
+    <section id="home" class="page">
+        <h2 class="font-serif" id="greeting">Welcome</h2>
         <div class="card" style="background: var(--cream-200); margin-top: 20px;">
-            <p class="font-serif" style="font-size: 1.1rem; font-style: italic;">"We have this hope as an anchor for the soul, firm and secure."</p>
-            <p style="font-size: 10px; margin-top: 8px;">— HEBREWS 6:19</p>
+            <p class="font-serif" style="font-style: italic; font-size: 1.1rem;">"We have this hope as an anchor for the soul, firm and secure."</p>
+            <p style="font-size: 12px; margin-top: 10px; font-weight: 600;">HEBREWS 6:19</p>
         </div>
-        <div class="card" onclick="showPage('repair')" style="background: var(--deepblue-900); color: white; cursor: pointer;">
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-                <i data-lucide="sparkles" style="color: var(--gold-500)"></i>
-                <h3 style="margin:0">Instant Repair</h3>
-            </div>
-            <p style="font-size: 0.85rem; opacity: 0.8;">Need instant spiritual relief? Chat with your companion.</p>
-        </div>
-    </div>
-
-    <div id="meditate" class="page">
-        <h2 class="font-serif">Meditation</h2>
-        <div class="card" style="text-align: center;">
-            <div class="timer-circle">
-                <div class="timer-display" id="timer">05:00</div>
-            </div>
-            <div style="display: flex; justify-content: center; gap: 15px;">
-                <button class="btn-gold" id="timer-toggle" onclick="toggleTimer()" style="width: 60px; height: 60px; border-radius: 50%;"><i data-lucide="play"></i></button>
-                <button onclick="resetTimer()" style="width: 60px; height: 60px; border-radius: 50%; border:none; background: var(--cream-200); cursor:pointer;"><i data-lucide="rotate-ccw"></i></button>
-            </div>
-        </div>
-    </div>
-
-    <div id="repair" class="page" style="padding-top: 20px;">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
+        <div class="card" style="display: flex; align-items: center; gap: 15px; cursor: pointer;" onclick="navigate('repair')">
             <i data-lucide="sparkles" style="color: var(--gold-600)"></i>
-            <h2 class="font-serif">Instant Repair</h2>
+            <div>
+                <h4 style="margin: 0;">Instant Repair</h4>
+                <p style="font-size: 12px; opacity: 0.7;">Quick spiritual realignment</p>
+            </div>
         </div>
-        <div id="chat-container">
-            <div class="message model">Peace be with you. I am your spiritual companion. What is troubling your soul today?</div>
-        </div>
-        <div style="display: flex; gap: 8px;">
-            <input type="text" id="chat-input" placeholder="Share your heart..." style="flex:1; padding:12px; border-radius:25px; border:1px solid var(--cream-200);">
-            <button onclick="sendMessage()" style="background:var(--gold-500); border:none; width:45px; height:45px; border-radius:50%; color:white; cursor:pointer;"><i data-lucide="send"></i></button>
-        </div>
-    </div>
+    </section>
 
-    <nav id="main-nav" style="display: none;">
-        <button class="nav-item active" onclick="showPage('home')"><i data-lucide="home"></i>Home</button>
-        <button class="nav-item" onclick="showPage('meditate')"><i data-lucide="play"></i>Meditate</button>
-        <button class="nav-item" onclick="showPage('repair')"><i data-lucide="sparkles"></i>Repair</button>
+    <section id="meditate" class="page">
+        <h2 class="font-serif">Be Still</h2>
+        <div class="timer-circle" id="timer-display">05:00</div>
+        <div style="display: flex; justify-content: center; gap: 20px;">
+            <button class="btn-primary" id="timer-btn" onclick="toggleTimer()" style="width: 60px; height: 60px; border-radius: 50%;">
+                <i data-lucide="play"></i>
+            </button>
+            <button onclick="resetTimer()" style="background: none; border: none; cursor: pointer;">
+                <i data-lucide="rotate-ccw"></i>
+            </button>
+        </div>
+    </section>
+
+    <section id="repair" class="page">
+        <h2 class="font-serif" style="margin-bottom: 20px;">Soul Companion</h2>
+        <div class="card">
+            <div id="chat-window">
+                <div class="msg bot">I am here. What is weighing on your heart?</div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 15px;">
+                <input type="text" id="chat-input" placeholder="Type a feeling (e.g. Anxious, Tired)..." style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #eee;">
+                <button onclick="handleChat()" style="background: var(--gold-500); border: none; padding: 10px; border-radius: 8px; color: white;">
+                    <i data-lucide="send"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <nav id="bottom-nav" style="display: none;">
+        <button class="nav-btn active" onclick="navigate('home')"><i data-lucide="home"></i>Home</button>
+        <button class="nav-btn" onclick="navigate('meditate')"><i data-lucide="wind"></i>Meditate</button>
+        <button class="nav-btn" onclick="navigate('repair')"><i data-lucide="sparkles"></i>Repair</button>
     </nav>
 
     <a href="https://wa.me/237673202653" class="whatsapp-float" target="_blank">
@@ -235,40 +138,53 @@
 </div>
 
 <script>
-    // Initialize Lucide Icons
+    // Initialize Icons
     lucide.createIcons();
 
-    // State Management
-    let timerInterval;
+    // App State
+    let userName = "";
     let timeLeft = 300;
-    let isTimerRunning = false;
+    let timerRunning = false;
+    let timerInterval;
 
-    function showPage(pageId) {
+    // Local Knowledge Base (The "API" replacement)
+    const responses = {
+        anxious: "Take a deep breath. 'Cast all your anxiety on Him because He cares for you.' (1 Peter 5:7). Try a 5-minute meditation now.",
+        tired: "It's okay to rest. Even the Creator rested on the seventh day. Turn off your notifications for 20 minutes.",
+        sad: "Your feelings are valid. 'The Lord is close to the brokenhearted.' (Psalm 34:18). You are not alone.",
+        angry: "Pause before you speak. Breathe. Let the heat dissipate before you address the situation.",
+        fear: "Fear is often a liar. Focus on one small thing you can control right now.",
+        default: "I hear you. Take a moment to sit in silence and invite peace into your current space."
+    };
+
+    function startApp() {
+        const input = document.getElementById('user-name');
+        userName = input.value || "Friend";
+        document.getElementById('greeting').innerText = `Welcome, ${userName}`;
+        document.getElementById('bottom-nav').style.display = 'flex';
+        navigate('home');
+    }
+
+    function navigate(pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
         
-        document.querySelectorAll('.nav-item').forEach(btn => {
+        document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.classList.toggle('active', btn.innerText.toLowerCase().includes(pageId));
         });
     }
 
-    function joinApp() {
-        const name = document.getElementById('user-name').value || 'Friend';
-        document.getElementById('welcome-msg').innerText = `Welcome back, ${name}.`;
-        document.getElementById('main-nav').style.display = 'flex';
-        showPage('home');
-    }
-
     // Timer Logic
     function toggleTimer() {
-        const btn = document.getElementById('timer-toggle');
-        if (isTimerRunning) {
+        const btn = document.getElementById('timer-btn');
+        if (timerRunning) {
             clearInterval(timerInterval);
             btn.innerHTML = '<i data-lucide="play"></i>';
         } else {
             timerInterval = setInterval(() => {
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
+                    alert("Time is up. Peace be with you.");
                     return;
                 }
                 timeLeft--;
@@ -276,52 +192,50 @@
             }, 1000);
             btn.innerHTML = '<i data-lucide="pause"></i>';
         }
-        isTimerRunning = !isTimerRunning;
+        timerRunning = !timerRunning;
         lucide.createIcons();
     }
 
     function resetTimer() {
         clearInterval(timerInterval);
+        timerRunning = false;
         timeLeft = 300;
-        isTimerRunning = false;
         updateTimerDisplay();
-        document.getElementById('timer-toggle').innerHTML = '<i data-lucide="play"></i>';
+        document.getElementById('timer-btn').innerHTML = '<i data-lucide="play"></i>';
         lucide.createIcons();
     }
 
     function updateTimerDisplay() {
-        const mins = Math.floor(timeLeft / 60);
-        const secs = timeLeft % 60;
-        document.getElementById('timer').innerText = `${mins}:${secs.toString().padStart(2, '0')}`;
+        const m = Math.floor(timeLeft / 60);
+        const s = timeLeft % 60;
+        document.getElementById('timer-display').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
     }
 
-    // Simulated Chat Logic (Local Replacement for Gemini)
-    const library = {
-        "anxious": "Do not be anxious about anything. Take a deep breath. Try the Meditation tab to center your mind.",
-        "stress": "Rest is a holy command. Consider setting your phone to grayscale for the next hour to reduce noise.",
-        "faith": "Faith is the substance of things hoped for. Keep your anchor firm in the Word today.",
-        "default": "I hear you. Take a moment to breathe deeply and acknowledge God's sovereignty over this situation."
-    };
-
-    function sendMessage() {
+    // Local Chat Logic
+    function handleChat() {
         const input = document.getElementById('chat-input');
-        const text = input.value.trim().toLowerCase();
-        if (!text) return;
+        const chatWindow = document.getElementById('chat-window');
+        const userText = input.value.trim().toLowerCase();
 
-        const container = document.getElementById('chat-container');
-        
+        if (!userText) return;
+
         // Add User Message
-        container.innerHTML += `<div class="message user">${input.value}</div>`;
-        input.value = '';
+        chatWindow.innerHTML += `<div class="msg user">${input.value}</div>`;
+        input.value = "";
 
-        // Simulate Bot Thinking
-        setTimeout(() => {
-            let response = library.default;
-            for (let key in library) {
-                if (text.includes(key)) response = library[key];
+        // Determine Response
+        let reply = responses.default;
+        for (const [key, value] of Object.entries(responses)) {
+            if (userText.includes(key)) {
+                reply = value;
+                break;
             }
-            container.innerHTML += `<div class="message model">${response}</div>`;
-            container.scrollTop = container.scrollHeight;
+        }
+
+        // Add Bot Message with slight delay
+        setTimeout(() => {
+            chatWindow.innerHTML += `<div class="msg bot">${reply}</div>`;
+            chatWindow.scrollTop = chatWindow.scrollHeight;
         }, 600);
     }
 </script>
