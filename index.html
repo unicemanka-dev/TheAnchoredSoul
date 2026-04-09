@@ -3,31 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stability Journey Portal</title>
+    <title>Anchored Soul - 21 Day Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap');
-        
-        :root {
-            --deep-blue-50: #eff6ff;
-            --deep-blue-100: #dbeafe;
-            --deep-blue-900: #1e3a8a;
-            --soft-gold-400: #fbbf24;
-            --light-purple-100: #f3e8ff;
-            --light-purple-600: #9333ea;
-        }
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
 
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        .font-serif { font-family: 'Playfair+Display', serif; }
-        
-        /* Custom Tailwind Color Extensions from your config */
-        .bg-deep-blue-900 { background-color: var(--deep-blue-900); }
-        .text-deep-blue-900 { color: var(--deep-blue-900); }
-        .border-deep-blue-100 { border-color: var(--deep-blue-100); }
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-blue': '#1A2B48',
+                        'deep-blue-light': '#2A3B58',
+                        'soft-gold': '#C5A059',
+                        'peace-gray': '#F5F7F9',
+                        'peace-white': '#FBFCFD',
+                        'light-purple': '#D4C9E0',
+                        'light-purple-dark': '#A694BB',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #FBFCFD; }
+        .bg-radial { background-image: radial-gradient(var(--tw-gradient-stops)); }
     </style>
 </head>
 <body>
@@ -35,161 +43,211 @@
 
     <script type="text/babel">
         const { useState, useEffect, useMemo } = React;
+        const { motion, AnimatePresence } = window.Motion;
 
-        // --- GLOBAL DATA (Consolidated from Files 1, 3, 4) ---
-        const journeyMonths = [
-            { month: "April", theme: "Stillness & Awareness", status: "completed" },
-            { month: "May", theme: "Discipline & Focus", status: "current" },
-            { month: "June", theme: "Emotional Healing", status: "upcoming" },
-            { month: "July", theme: "Identity & Discovery", status: "upcoming" }
-        ];
-
-        const resources = [
-            { id: 1, title: "The Power of Stillness in a Noisy World", type: "Article", category: "Stillness", icon: "file-text" },
-            { id: 2, title: "Guided Meditation: Psalm 23", type: "Audio", category: "Stillness", icon: "headphones" },
-            { id: 3, title: "Overcoming Digital Distractions", type: "Video", category: "Focus", icon: "play-circle" },
-            { id: 5, title: "Healing from Past Hurts", type: "Video", category: "Relationships", icon: "play-circle" }
-        ];
-
-        // Helper to render Lucide icons in a React environment
-        const LucideIcon = ({ name, className = "w-5 h-5" }) => {
-            useEffect(() => { lucide.createIcons(); }, []);
-            return <i data-lucide={name} className={className}></i>;
+        const Icon = ({ name, size = 24, className = "" }) => {
+            useEffect(() => { lucide.createIcons(); }, [name]);
+            return <i data-lucide={name} style={{width: size, height: size}} className={className}></i>;
         };
 
-        // --- COMPONENTS ---
+        // --- NEW HOME COMPONENT ---
+        function Home({ onStart }) {
+            const features = [
+                { icon: "wind", title: "Stillness", desc: "Find peace in His presence through guided meditation[cite: 57]." },
+                { icon: "target", title: "Focus", desc: "Build God-honoring habits and deep work discipline[cite: 127]." },
+                { icon: "users", title: "Community", desc: "Cultivate meaningful, faith-centered connections[cite: 172]." },
+                { icon: "compass", title: "Clarity", desc: "Discover your purpose and map out your vision[cite: 205]." }
+            ];
 
-        function Dashboard({ onNavigate }) {
             return (
-                <div className="max-w-7xl mx-auto px-6 py-12">
-                    <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
-                        <div>
-                            <h1 className="text-4xl font-serif font-bold text-deep-blue-900 mb-2">Welcome back, Sarah</h1>
-                            <p className="text-slate-600">Here is your progress on the journey to stability.</p>
-                        </div>
-                        <button onClick={() => onNavigate('soulcheck')} className="px-6 py-2 rounded-full bg-purple-100 text-purple-700 font-medium hover:bg-purple-200 transition-colors flex items-center gap-2">
-                            <LucideIcon name="activity" /> Take Daily Soul Check
-                        </button>
-                    </div>
+                <div className="min-h-screen bg-peace-white overflow-hidden">
+                    <section className="relative py-24 px-6 text-center">
+                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl mx-auto">
+                            <div className="w-16 h-16 rounded-full bg-deep-blue flex items-center justify-center text-soft-gold mx-auto mb-8 shadow-lg">
+                                <Icon name="anchor" size={32} />
+                            </div>
+                            <h1 className="text-5xl md:text-6xl font-serif text-deep-blue mb-6">From Noise to Stillness</h1>
+                            <p className="text-xl text-deep-blue/60 mb-10 leading-relaxed">
+                                Anchored Soul is a 21-day journey designed to help you quiet the chaos, reclaim your focus, and realign your life with your spiritual calling.
+                            </p>
+                            <button onClick={onStart} className="px-10 py-5 bg-deep-blue text-white rounded-full font-medium shadow-xl hover:bg-deep-blue-light transition-all flex items-center gap-3 mx-auto">
+                                Start Your Journey <Icon name="arrow-right" size={20} />
+                            </button>
+                        </motion.div>
+                    </section>
 
-                    <div className="grid lg:grid-cols-3 gap-8">
-                        <div className="lg:col-span-2 bg-white rounded-3xl p-8 border border-deep-blue-100 shadow-sm">
-                            <h2 className="text-2xl font-serif font-semibold text-deep-blue-900 mb-8">Your 2026 Journey</h2>
-                            <div className="space-y-6">
-                                {journeyMonths.map((m, i) => (
-                                    <div key={i} className="flex items-center gap-4">
-                                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${m.status === 'completed' ? 'bg-green-100 text-green-600' : 'bg-blue-50 text-blue-500'}`}>
-                                            <LucideIcon name={m.status === 'completed' ? 'check' : 'calendar'} />
-                                        </div>
-                                        <div>
-                                            <p className="font-bold text-deep-blue-900">{m.month}</p>
-                                            <p className="text-sm text-slate-500">{m.theme}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+                    <section className="max-w-6xl mx-auto px-6 py-20">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                            {features.map((f, i) => (
+                                <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} className="bg-white p-8 rounded-[32px] border border-deep-blue/5 shadow-sm text-center">
+                                    <div className="text-soft-gold mb-4 flex justify-center"><Icon name={f.icon} size={32} /></div>
+                                    <h3 className="text-xl font-serif text-deep-blue mb-2">{f.title}</h3>
+                                    <p className="text-sm text-deep-blue/50">{f.desc}</p>
+                                </motion.div>
+                            ))}
                         </div>
-                        <div className="bg-deep-blue-900 rounded-3xl p-6 text-white h-fit">
-                            <h3 className="font-serif text-xl mb-6">Recommended for You</h3>
-                            <div className="bg-blue-800/50 p-4 rounded-2xl mb-4 border border-blue-700">
-                                <span className="text-xs text-amber-400 font-bold uppercase">Stillness</span>
-                                <p className="font-medium">Overcoming Morning Anxiety</p>
-                            </div>
-                        </div>
-                    </div>
+                    </section>
                 </div>
             );
         }
 
-        function ResourceLibrary() {
-            const [search, setSearch] = useState("");
-            const filtered = resources.filter(r => r.title.toLowerCase().includes(search.toLowerCase()));
-
-            return (
-                <div className="max-w-7xl mx-auto px-6 py-12">
-                    <h1 className="text-4xl font-serif font-bold text-deep-blue-900 mb-8 text-center">Resource Library</h1>
-                    <div className="mb-12 relative max-w-xl mx-auto">
-                        <input 
-                            type="text" 
-                            placeholder="Search resources..." 
-                            className="w-full pl-12 pr-4 py-3 rounded-2xl bg-white border border-deep-blue-100 shadow-sm focus:ring-2 focus:ring-amber-400 outline-none"
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-                        <LucideIcon name="search" className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-                    </div>
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {filtered.map(res => (
-                            <div key={res.id} className="bg-white p-6 rounded-3xl border border-deep-blue-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-                                <LucideIcon name={res.icon} className="text-amber-500 mb-4 w-8 h-8" />
-                                <h3 className="text-lg font-bold text-deep-blue-900 mb-2">{res.title}</h3>
-                                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">{res.type}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            );
-        }
-
-        function SoulCheck({ onComplete }) {
-            const [step, setStep] = useState(1);
-            const [score, setScore] = useState(5);
-
-            const handleNext = () => step < 3 ? setStep(step + 1) : onComplete();
-
-            return (
-                <div className="max-w-2xl mx-auto py-20 px-6">
-                    <div className="bg-white rounded-[40px] p-12 border border-deep-blue-100 shadow-2xl text-center">
-                        <LucideIcon name="activity" className="w-16 h-16 text-purple-600 mx-auto mb-6" />
-                        <h2 className="text-3xl font-serif font-bold text-deep-blue-900 mb-2">Daily Soul Check</h2>
-                        <div className="w-full bg-slate-100 h-2 rounded-full my-10 overflow-hidden">
-                            <div className="bg-deep-blue-900 h-full transition-all duration-500" style={{width: `${(step/3)*100}%`}}></div>
-                        </div>
-                        <div className="min-h-[200px]">
-                            {step === 1 && (
-                                <div className="space-y-6">
-                                    <h3 className="text-2xl font-medium text-deep-blue-900">How is your focus today?</h3>
-                                    <input type="range" min="1" max="10" value={score} onChange={(e) => setScore(e.target.value)} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-deep-blue-900" />
-                                    <div className="flex justify-between text-xs text-slate-400 font-bold"><span>DISTRACTED</span><span>FOCUSED</span></div>
-                                </div>
-                            )}
-                            {step > 1 && <div className="py-10 text-slate-600 italic">"Be still, and know that I am God."</div>}
-                        </div>
-                        <button onClick={handleNext} className="w-full py-4 bg-deep-blue-900 text-white rounded-2xl font-bold mt-8 shadow-lg shadow-blue-900/20">
-                            {step === 3 ? "Complete Check" : "Next Step"}
-                        </button>
-                    </div>
-                </div>
-            );
-        }
-
-        // --- MAIN APPLICATION SHELL ---
-
-        function App() {
-            const [page, setPage] = useState('dashboard');
-
-            const renderContent = () => {
-                switch(page) {
-                    case 'resources': return <ResourceLibrary />;
-                    case 'soulcheck': return <SoulCheck onComplete={() => setPage('dashboard')} />;
-                    case 'community': return <div className="p-20 text-center"><h1 className="text-3xl font-serif">Community Forum</h1><p>Coming Soon</p></div>;
-                    default: return <Dashboard onNavigate={setPage} />;
-                }
+        function Registration({ onComplete }) {
+            const [formData, setFormData] = useState({ name: '', email: '' });
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                localStorage.setItem('anchored_soul_user', JSON.stringify(formData));
+                localStorage.setItem('anchored_soul_progress', JSON.stringify({ stillness: [], focus: [], relationships: [], clarity: [] }));
+                onComplete();
             };
+            return (
+                <div className="min-h-screen bg-peace-gray flex items-center justify-center p-6">
+                    <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-white p-10 rounded-[40px] shadow-2xl max-w-md w-full border border-deep-blue/5">
+                        <h2 className="text-3xl font-serif text-deep-blue mb-2">Initialize Journey</h2>
+                        <p className="text-deep-blue/50 mb-8">Set up your local profile to track your 21-day progress[cite: 245].</p>
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            <input type="text" required placeholder="Full Name" className="w-full px-5 py-4 rounded-2xl bg-peace-gray focus:ring-2 focus:ring-soft-gold outline-none" onChange={e => setFormData({...formData, name: e.target.value})} />
+                            <input type="email" required placeholder="Email Address" className="w-full px-5 py-4 rounded-2xl bg-peace-gray focus:ring-2 focus:ring-soft-gold outline-none" onChange={e => setFormData({...formData, email: e.target.value})} />
+                            <button type="submit" className="w-full py-4 bg-deep-blue text-white rounded-full font-medium mt-4">Create Profile</button>
+                        </form>
+                    </motion.div>
+                </div>
+            );
+        }
+
+        // --- MODULE COMPONENTS ---
+        function Dashboard() {
+            const user = JSON.parse(localStorage.getItem('anchored_soul_user') || '{"name":"Friend"}');
+            return (
+                <div className="max-w-7xl mx-auto px-6 py-12">
+                    <h1 className="text-4xl font-serif text-deep-blue mb-2">Welcome Back, {user.name}</h1>
+                    <p className="text-deep-blue/60 mb-12">Track your transformation over the 21-day cycle[cite: 7].</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="bg-white p-8 rounded-[40px] border border-deep-blue/5 shadow-sm">
+                            <h3 className="text-sm font-bold uppercase tracking-widest text-deep-blue/30 mb-6">Active Phase</h3>
+                            <div className="flex items-center justify-between p-6 bg-peace-gray rounded-3xl">
+                                <div><div className="text-2xl font-serif text-deep-blue">Phase 1: Stillness</div><div className="text-sm text-soft-gold font-medium">Day 8 of 21</div></div>
+                                <Icon name="calendar" className="text-deep-blue/20" />
+                            </div>
+                        </div>
+                        <div className="bg-deep-blue p-8 rounded-[40px] text-white flex flex-col justify-center">
+                            <Icon name="award" className="text-soft-gold mb-4" />
+                            <div className="text-2xl font-serif">Stay Anchored</div>
+                            <p className="text-white/60 text-sm mt-2">"He leads me beside quiet waters, he refreshes my soul."</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function StillnessCenter() {
+            const [isPlaying, setIsPlaying] = useState(false);
+            return (
+                <div className="max-w-4xl mx-auto px-6 py-12">
+                    <div className="bg-white rounded-[40px] p-12 text-center border border-deep-blue/5 shadow-sm">
+                        <h2 className="text-3xl font-serif text-deep-blue mb-8">Guided Meditation [cite: 57]</h2>
+                        <div className="w-48 h-48 bg-peace-gray rounded-full mx-auto mb-12 flex items-center justify-center relative">
+                            <motion.div animate={{ scale: isPlaying ? [1, 1.2, 1] : 1 }} transition={{ repeat: Infinity, duration: 4 }} className="absolute inset-0 rounded-full border-2 border-soft-gold/30" />
+                            <button onClick={() => setIsPlaying(!isPlaying)} className="w-20 h-20 bg-deep-blue text-white rounded-full z-10 flex items-center justify-center shadow-lg">
+                                <Icon name={isPlaying ? "pause" : "play"} size={32} />
+                            </button>
+                        </div>
+                        <p className="text-deep-blue/60 italic font-serif text-lg">"Be still, and know that I am God." [cite: 54]</p>
+                    </div>
+                </div>
+            );
+        }
+
+        function FocusDiscipline() {
+            const [time, setTime] = useState(25 * 60);
+            const [active, setActive] = useState(false);
+            useEffect(() => {
+                if (active && time > 0) {
+                    const timer = setInterval(() => setTime(t => t - 1), 1000);
+                    return () => clearInterval(timer);
+                }
+            }, [active, time]);
+            return (
+                <div className="max-w-4xl mx-auto px-6 py-12 flex flex-col items-center">
+                    <div className="bg-white p-12 rounded-[40px] border border-deep-blue/5 shadow-sm w-full text-center">
+                        <h2 className="text-2xl font-serif mb-8 text-deep-blue">Deep Work Timer [cite: 127]</h2>
+                        <div className="text-8xl font-mono text-deep-blue mb-12">{Math.floor(time/60)}:{(time%60).toString().padStart(2,'0')}</div>
+                        <button onClick={() => setActive(!active)} className="px-12 py-4 bg-deep-blue text-white rounded-full font-medium">{active ? 'Pause' : 'Start Session'}</button>
+                    </div>
+                </div>
+            );
+        }
+
+        function RelationshipCommunity() {
+            return (
+                <div className="max-w-7xl mx-auto px-6 py-12">
+                    <h1 className="text-4xl font-serif text-deep-blue mb-12">Community & Connections [cite: 172]</h1>
+                    <div className="grid md:grid-cols-2 gap-8">
+                        <div className="bg-white p-8 rounded-[40px] border border-deep-blue/5">
+                            <h3 className="text-xl font-serif mb-4 flex items-center gap-2 text-deep-blue"><Icon name="message-circle" className="text-soft-gold" /> Discussion</h3>
+                            <p className="text-deep-blue/60 text-sm mb-6">Engage with others on the journey of stillness.</p>
+                            <button className="w-full py-3 bg-peace-gray text-deep-blue rounded-2xl text-sm font-semibold">Join the Forum</button>
+                        </div>
+                        <div className="bg-white p-8 rounded-[40px] border border-deep-blue/5">
+                            <h3 className="text-xl font-serif mb-4 flex items-center gap-2 text-deep-blue"><Icon name="users" className="text-soft-gold" /> Mentorship</h3>
+                            <p className="text-deep-blue/60 text-sm mb-6">Request spiritual guidance from a mentor.</p>
+                            <button className="w-full py-3 bg-peace-gray text-deep-blue rounded-2xl text-sm font-semibold">Connect Now</button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function ClarityDirection() {
+            return (
+                <div className="max-w-7xl mx-auto px-6 py-12">
+                    <h1 className="text-4xl font-serif text-deep-blue mb-12">Clarity & Purpose [cite: 205]</h1>
+                    <div className="bg-white p-10 rounded-[40px] border border-deep-blue/5">
+                        <div className="grid sm:grid-cols-2 gap-8">
+                            <div className="p-8 bg-peace-gray/50 rounded-3xl border border-dashed border-deep-blue/10">
+                                <h4 className="font-serif text-lg text-deep-blue mb-2">Spiritual Vision</h4>
+                                <p className="text-xs text-deep-blue/50 mb-4">Set God-honoring goals for your growth[cite: 206].</p>
+                                <button className="text-soft-gold text-sm font-bold flex items-center gap-1"><Icon name="pen-tool" size={14} /> Add Vision</button>
+                            </div>
+                            <div className="p-8 bg-peace-gray/50 rounded-3xl border border-dashed border-deep-blue/10">
+                                <h4 className="font-serif text-lg text-deep-blue mb-2">Career Calling</h4>
+                                <p className="text-xs text-deep-blue/50 mb-4">Align your vocation with your calling[cite: 206].</p>
+                                <button className="text-soft-gold text-sm font-bold flex items-center gap-1"><Icon name="pen-tool" size={14} /> Set Goal</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // --- MAIN APP ---
+        function App() {
+            const [step, setStep] = useState(localStorage.getItem('anchored_soul_user') ? 'dashboard' : 'home');
+            const [tab, setTab] = useState('dashboard');
+
+            if (step === 'home') return <Home onStart={() => setStep('register')} />;
+            if (step === 'register') return <Registration onComplete={() => setStep('dashboard')} />;
 
             return (
                 <div className="min-h-screen">
-                    <nav className="bg-white/80 backdrop-blur-md border-b border-deep-blue-100 py-4 px-8 flex justify-between items-center sticky top-0 z-50">
-                        <h1 className="text-2xl font-serif font-bold text-deep-blue-900 tracking-tight">Stability</h1>
-                        <div className="flex gap-8 text-sm font-bold text-slate-400">
-                            {['dashboard', 'community', 'resources'].map(p => (
-                                <button key={p} onClick={() => setPage(p)} 
-                                    className={`uppercase tracking-widest hover:text-deep-blue-900 transition-colors ${page === p ? 'text-deep-blue-900' : ''}`}>
-                                    {p}
+                    <nav className="bg-white/80 backdrop-blur-md border-b border-deep-blue/5 px-8 py-4 flex justify-between items-center sticky top-0 z-50">
+                        <div className="flex items-center gap-2 font-serif text-xl text-deep-blue cursor-pointer" onClick={() => setStep('home')}>
+                            <Icon name="anchor" className="text-soft-gold" /> Anchored Soul
+                        </div>
+                        <div className="hidden md:flex gap-8">
+                            {['dashboard', 'stillness', 'focus', 'community', 'clarity'].map(t => (
+                                <button key={t} onClick={() => setTab(t)} className={`text-sm font-medium capitalize tracking-wide transition-colors ${tab === t ? 'text-soft-gold' : 'text-deep-blue/50 hover:text-deep-blue'}`}>
+                                    {t}
                                 </button>
                             ))}
                         </div>
                     </nav>
-                    <main className="pb-20">{renderContent()}</main>
+                    <main className="pb-20">
+                        {tab === 'dashboard' && <Dashboard />}
+                        {tab === 'stillness' && <StillnessCenter />}
+                        {tab === 'focus' && <FocusDiscipline />}
+                        {tab === 'community' && <RelationshipCommunity />}
+                        {tab === 'clarity' && <ClarityDirection />}
+                    </main>
                 </div>
             );
         }
